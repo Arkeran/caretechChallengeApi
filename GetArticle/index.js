@@ -19,7 +19,7 @@ module.exports = function(context, req) {
       .toArray((err, result) => {
         if (err) send(500, err.message);
         if (!results.length) {
-          send(400, '');
+          send(404, 'No article(s) found');
         }
 
         send(200, JSON.parse(JSON.stringify(result)));
