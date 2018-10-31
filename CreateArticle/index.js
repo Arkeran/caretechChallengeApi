@@ -11,6 +11,7 @@ module.exports = function(context, req) {
     let db = client.db('admin');
     // Data sent are saved in a variable.
     let article = ({ id, title, content } = req.body);
+
     // Insertion of the new article in the collection articles.
     db.collection('articles').insertOne(
       {
@@ -24,6 +25,7 @@ module.exports = function(context, req) {
         send(200, article);
       }
     );
+
   });
 };
 // This function sends the response of the request.
