@@ -15,7 +15,7 @@ module.exports = function(context, req) {
     article.id = parseInt(req.query.id);
     // Check if the required fields are not empty
     if ( !article.title || !article.content ) {
-      send(500, 'Invalid field values, Please enter the new values for title and content.');
+      send(400, 'Invalid field values, Please enter the new values for title and content.');
     } else
     {
       // Update the article with the title and content send in the request.

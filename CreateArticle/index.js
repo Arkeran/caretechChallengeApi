@@ -13,7 +13,7 @@ module.exports = function(context, req) {
     let article = ({ id, title, content } = req.body);
     // Check if the required fields are not empty
     if ( !article.id || !article.title || !article.content ) {
-      send(500, 'Invalid field values, Please enter a value for id, title and content.');
+      send(400, 'Invalid field values, Please enter a value for id, title and content.');
     } else
     {
       // Insertion of the new article in the collection articles.
