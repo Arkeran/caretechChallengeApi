@@ -13,17 +13,23 @@ module.exports = function(context, req) {
     // Data in the request are saved in a variable.
     let article = ({ title, content } = req.body);
     article.id = parseInt(req.query.id);
-    // Update the article with the title and content send in the request.
-    db.collection('articles')
-      .updateOne(
-        { id: article.id },
-        { $set: { title: article.title, content: article.content } },
-        (err, articles) => {
-          if (err) send(500, err.message);
+    // Check if the required fields are not empty
+    if ( !article.title || !article.content ) {
+      send(500, 'Invalid field values, Please enter the new values for title and content.');
+    } else
+    {
+      // Update the article with the title and content send in the request.
+      db.collection('articles')
+        .updateOne(
+          { id: article.id },
+          { $set: { title: article.title, content: article.content } },
+          (err, articles) => {
+            if (err) send(500, err.message);
 
-          send(200, article);
-        }
-      );
+            send(200, article);
+          }
+        );
+      }
   });
 };
 // This function sends the response of the request.

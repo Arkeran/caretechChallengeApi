@@ -18,11 +18,9 @@ module.exports = function(context, req) {
       )
       .toArray((err, result) => {
         if (err) send(500, err.message);
-        if (!results.length) {
-          send(404, 'No article(s) found');
-        }
-
-        send(200, JSON.parse(JSON.stringify(result)));
+        // Send a 404 if the article is not found
+        if (!result.length) send(404, 'Article not found');
+        else send(200, JSON.parse(JSON.stringify(result)));
       });
   });
 };

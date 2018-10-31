@@ -11,20 +11,25 @@ module.exports = function(context, req) {
     let db = client.db('admin');
     // Data sent are saved in a variable.
     let article = ({ id, title, content } = req.body);
-
-    // Insertion of the new article in the collection articles.
-    db.collection('articles').insertOne(
-      {
-        id: article.id,
-        title: article.title,
-        content: article.content
-      },
-      (err, articles) => {
-        if (err) send(500, err.message);
-        // If the request succeded we send a code 200.
-        send(200, article);
-      }
-    );
+    // Check if the required fields are not empty
+    if ( !article.id || !article.title || !article.content ) {
+      send(500, 'Invalid field values, Please enter a value for id, title and content.');
+    } else
+    {
+      // Insertion of the new article in the collection articles.
+      db.collection('articles').insertOne(
+        {
+          id: article.id,
+          title: article.title,
+          content: article.content
+        },
+        (err, articles) => {
+          if (err) send(500, err.message);
+          // If the request succeded we send a code 200.
+          send(200, article);
+        }
+      );
+    }
 
   });
 };
